@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(linux_network_lib C)
+project(generic C)
 
 set(CMAKE_C_STANDARD 11)
-
-add_library(error error.c)
+add_executable(generic generic.c)

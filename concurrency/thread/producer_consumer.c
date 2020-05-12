@@ -24,7 +24,7 @@ static void *produce(void *args) {
 
 int main() {
     BlockQueue block_queue;
-    bq_init(&block_queue);
+    bq_init(&block_queue, 7);
 
     pthread_t consumer_t, producer_t;
     pthread_create(&consumer_t, NULL, &consume, &block_queue);
@@ -33,5 +33,6 @@ int main() {
     void* res;
     pthread_join(consumer_t, &res);
     pthread_join(producer_t, &res);
+    bq_destroy(&block_queue);
     return 0;
 }

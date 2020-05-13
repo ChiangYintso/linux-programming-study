@@ -7,6 +7,7 @@
 #include <time.h>
 #include <string.h>
 #include <zconf.h>
+#include <stdlib.h>
 #include "utils/error.h"
 
 int main(int argc, char *argv[]) {
@@ -25,13 +26,24 @@ int main(int argc, char *argv[]) {
     bind(listen_fd, (const struct sockaddr *) &server_addr, sizeof(server_addr));
     listen(listen_fd, LISTENQ);
 
+    pid_t pid;
     for(;;) {
         if ((conn_fd = accept(listen_fd, NULL, NULL)) == -1)
             err_quit("accept error");
 
-        ticks = time(NULL);
-        snprintf(buff, sizeof(buff), "%.23s\r\n", ctime(&ticks));
-        write(conn_fd, buff, strlen(buff));
-        close(conn_fd);
+        if ((pid = Fork()) == 0) {
+            Close(listen_fd);
+            for (int i = 1; i <= 15; ++i) {
+                sleep(1);
+                snprintf(buff, sizeof(buff), "%d\r\n", i);
+                write(conn_fd, buff, strlen(buff));
+            }
+            ticks = time(NULL);
+            snprintf(buff, sizeof(buff), "%.23s\r\n", ctime(&ticks));
+            write(conn_fd, buff, strlen(buff));
+            Close(conn_fd);
+            exit(0);
+        }
+        Close(conn_fd);
     }
 }

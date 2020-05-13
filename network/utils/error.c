@@ -20,7 +20,7 @@ static void err_do(_Bool errno_flag, int level, const char *fmt, va_list ap) {
     errno_save = errno;
     vsnprintf(buf, MAX_LINE, fmt, ap);
 
-    n = (int)strlen(buf);
+    n = (int) strlen(buf);
     if (errno_flag)
         snprintf(buf + n, MAX_LINE - n, ": %s", strerror(errno_save));
     strcat(buf, "\n");

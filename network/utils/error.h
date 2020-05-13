@@ -13,4 +13,7 @@
 _Noreturn void err_quit(const char *fmt, ...);
 
 _Noreturn void err_sys(const char *fmt, ...);
+
+int err_wrapper(const char *err, int (*func)(void *), ...);
+
 #endif //LINUX_NETWORK_ERROR_H

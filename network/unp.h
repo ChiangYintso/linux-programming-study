@@ -11,4 +11,8 @@
 #define LISTENQ 1024 // 2nd argument to listen()
 #define MAX_LINE 4096 // max text line length
 
+void Close(int fd);
+
+pid_t Fork();
+
 #endif //LINUX_NETWORK_UNP_H

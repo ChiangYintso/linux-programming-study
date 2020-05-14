@@ -1,1 +1,0 @@
-add_library(error error.c)

@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "error.h"
-#include "../network/unp.h"
+#include "unp.h"
 
 int daemon_proc;
 

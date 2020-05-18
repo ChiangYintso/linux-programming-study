@@ -15,4 +15,8 @@ void Close(int fd);
 
 pid_t Fork();
 
+void Write(int fd, void *buf, int n);
+
+void Lseek(int fd, __off_t offset, int whence);
+
 #endif //LINUX_NETWORK_UNP_H

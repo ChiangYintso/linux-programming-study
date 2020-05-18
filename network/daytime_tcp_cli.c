@@ -1,12 +1,11 @@
 //
 // Created by jiang on 2020/5/7.
 //
-#include <string.h>
 #include <zconf.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "unp.h"
-#include "utils/error.h"
+#include "common/unp.h"
+#include "common/error.h"
 #include "tcp_cli.h"
 
 int main(int argc, const char *argv[]) {

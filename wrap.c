@@ -74,3 +74,28 @@ void Connect(int sock_fd, const struct sockaddr *servaddr, socklen_t socklen) {
         err_exit("connect error");
     }
 }
+
+void Shutdown(int sock_fd, int how) {
+    if (shutdown(sock_fd, how) < 0)
+        err_exit("shutdown error");
+}
+
+int Select(int maxfdp1, fd_set *__restrict readfds,
+           fd_set *__restrict writefds,
+           fd_set *__restrict exceptfds,
+           struct timeval *__restrict timeout) {
+    int n_ready;
+    if ((n_ready = select(maxfdp1, readfds, writefds, exceptfds, timeout)) < 0) {
+        perror("select error");
+        exit(EXIT_FAILURE);
+    }
+    return n_ready;
+}
+int Poll(struct pollfd *fds, nfds_t nfds, int timeout) {
+    int n = poll(fds, nfds, timeout);
+    if (n < 0) {
+        perror("poll error");
+        exit(EXIT_FAILURE);
+    }
+    return n;
+}

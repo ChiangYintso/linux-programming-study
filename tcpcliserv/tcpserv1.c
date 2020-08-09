@@ -2,9 +2,9 @@
 // Created by jiang on 2020/7/26.
 //
 
-#include "wrap.h"
-#include "unp.h"
-#include "err_handle.h"
+#include "../wrap.h"
+#include "../unp.h"
+#include "../err_handle.h"
 #include <sys/socket.h>
 #include <string.h>
 #include <unistd.h>
@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <arpa/inet.h>
+#include <signal.h>
+#include "sig_child_wait.h"
 
 static void str_echo(int sock_fd, const char *addr, uint16_t client_port) {
     ssize_t n;
@@ -39,6 +41,12 @@ int main(int argc, char *argv[]) {
 
     Bind(listen_fd, (const struct sockaddr *) &serv_addr, sizeof(serv_addr));
     Listen(listen_fd, LISTENQ);
+
+    // fork child process must handle SIGCHLD
+    if (signal(SIGCHLD, sig_child_wait) == SIG_ERR) {
+        perror("signal error");
+        exit(EXIT_FAILURE);
+    }
 
     int conn_fd;
 

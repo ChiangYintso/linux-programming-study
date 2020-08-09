@@ -6,6 +6,7 @@
 #define UNP_STUDY_WRAP_H
 
 #include <sys/socket.h>
+#include <sys/poll.h>
 
 int Socket(int domain, int type, int protocol);
 
@@ -24,5 +25,14 @@ void Inet_pton(int af, const char *__restrict cp,
                void *__restrict buf);
 
 void Connect(int sock_fd, const struct sockaddr *servaddr, socklen_t socklen);
+
+void Shutdown(int sock_fd, int how);
+
+int Select(int maxfdp1, fd_set *__restrict readfds,
+           fd_set *__restrict writefds,
+           fd_set *__restrict exceptfds,
+           struct timeval *__restrict timeout);
+
+int Poll(struct pollfd *__fds, nfds_t __nfds, int __timeout);
 
 #endif //UNP_STUDY_WRAP_H

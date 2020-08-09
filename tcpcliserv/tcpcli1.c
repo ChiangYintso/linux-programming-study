@@ -8,9 +8,9 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <unistd.h>
-#include "wrap.h"
-#include "unp.h"
-#include "writen.h"
+#include "../wrap.h"
+#include "../unp.h"
+#include "../writen.h"
 
 void str_cli(int sock_fd) {
     char send_line[MAXLINE], recv_line[MAXLINE];

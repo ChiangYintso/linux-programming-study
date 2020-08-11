@@ -81,7 +81,6 @@ static void schedule(int n,
     }
 }
 
-
 int main() {
     puts("输入时间片长度");
     scanf("%u", &time_slice);

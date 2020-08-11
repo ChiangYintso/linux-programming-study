@@ -6,18 +6,22 @@
 #include <unistd.h>
 #include "block_queue.h"
 
+static pthread_barrier_t barrier;
+
 static void *consume(void *args) {
+    pthread_barrier_wait(&barrier);
     BlockQueue *bq = args;
     for (int i = 0; i < 1000; ++i) {
-        usleep(30);
+        sleep(1);
         bq_pop(bq);
     }
 }
 
 static void *produce(void *args) {
+    pthread_barrier_wait(&barrier);
     BlockQueue *bq = args;
     for (int i = 0; i < 1000; ++i) {
-        usleep(i % 6);
+        sleep(9);
         bq_push(bq, i);
     }
 }
@@ -25,6 +29,9 @@ static void *produce(void *args) {
 int main() {
     BlockQueue block_queue;
     bq_init(&block_queue, 7);
+
+
+    pthread_barrier_init(&barrier, NULL, 2);
 
     pthread_t consumer_t, producer_t;
     pthread_create(&consumer_t, NULL, &consume, &block_queue);
@@ -34,5 +41,7 @@ int main() {
     pthread_join(consumer_t, &res);
     pthread_join(producer_t, &res);
     bq_destroy(&block_queue);
+    pthread_barrier_destroy(&barrier);
+
     return 0;
 }

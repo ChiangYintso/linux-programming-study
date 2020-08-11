@@ -9,7 +9,7 @@ static int a = 0;
 
 void *do_something(void *message) {
     printf("hello %s\n", (char *)message);
-    for (int i = 0; i < 10000; ++i) {
+    for (int i = 0; i < 100000; ++i) {
         a++;
     }
     return message;

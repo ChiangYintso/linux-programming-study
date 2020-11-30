@@ -18,3 +18,4 @@ add_executable(semaphore semaphore.c)
 
 
 add_executable(producer_consumer producer_consumer.c)
+add_executable(thread_error thread_exception.c)
